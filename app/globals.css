@@ -1,26 +1,280 @@
-@import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* -------------------------
+   COMPACT CALENDAR
+------------------------- */
+
+.calendar {
+  width: 100%;
+  overflow-x: auto;
+  padding: 2px 4px;
+  scrollbar-width: thin;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Week-number header */
+.calendar-header {
+  display: grid;
+  grid-template-columns: 50px max-content;
+  column-gap: 4px;
+  align-items: center;
+  height: 12px;
+  margin-bottom: 2px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.header-spacer {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 10px;
+}
+
+.week-numbers,
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(52, 7px);
+  gap: 1px;
+}
+
+.week-numbers {
+  height: 12px;
+  align-items: center;
+}
+
+.week-numbers span {
+  width: 7px;
+  font-size: 6px;
+  line-height: 8px;
+  text-align: center;
+  color: #595959;
+  font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------
+   YEAR ROWS
+------------------------- */
+
+.year-row {
+  display: grid;
+  grid-template-columns: 50px max-content;
+  column-gap: 4px;
+  align-items: center;
+
+  height: 7px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* -------------------------
+   YEAR LABELS
+------------------------- */
+
+.year-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 50px;
+  height: 7px;
+  min-height: 0;
+
+  padding: 0;
+  margin: 0;
+
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: #333;
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.year-number {
+  width: 22px;
+  min-width: 22px;
+
+  font-size: 7px;
+  font-weight: 700;
+  line-height: 7px;
+  font-variant-numeric: tabular-nums;
+}
+
+.year-text,
+.year-weeks {
+  display: none;
+}
+
+/* -------------------------
+   WEEK SQUARES
+------------------------- */
+
+.week-grid {
+  align-items: center;
+  height: 7px;
+}
+
+.week {
+  appearance: none;
+  box-sizing: border-box;
+
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  min-height: 0;
+
+  padding: 0;
+  margin: 0;
+
+  border: 1px solid #767676;
+  border-radius: 0;
+  background: #fff;
+
+  cursor: pointer;
+}
+
+.week-filled {
+  background: #171717;
+  border-color: #171717;
+}
+
+/* No square enlargement */
+.week:hover {
+  outline: 1px solid #555;
+  outline-offset: 0;
+}
+
+/* Keyboard focus remains visible */
+.week:focus-visible,
+.year-label:focus-visible,
+.reset-button:focus-visible {
+  outline: 2px solid #005fcc;
+  outline-offset: 1px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Compact spacing between every year */
+.year-completed .year-number {
+  color: #171717;
+}
+
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.portfolio-link {
+  display: grid;
+  place-items: center;
+
+  color: #666;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.copyright-text,
+.portfolio-text {
+  grid-area: 1 / 1;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.portfolio-text {
+  visibility: hidden;
+}
+
+.portfolio-link:hover .copyright-text,
+.portfolio-link:focus-visible .copyright-text {
+  visibility: hidden;
+}
+
+.portfolio-link:hover .portfolio-text,
+.portfolio-link:focus-visible .portfolio-text {
+  visibility: visible;
+}
+
+/* No sudden colour or font changes */
+.portfolio-link:hover,
+.portfolio-link:focus-visible {
+  color: #666;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.portfolio-link:focus-visible {
+  outline: 2px solid #005fcc;
+  outline-offset: 4px;
+}
+
+
+/* -------------------------
+   RESPONSIVE HEIGHT
+------------------------- */
+
+@media (max-height: 900px) {
+  .calendar {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .calendar-header {
+    height: 10px;
+    margin-bottom: 1px;
+  }
+
+  .week-numbers {
+    height: 10px;
+  }
+
+  .year-row,
+  .year-label,
+  .week-grid {
+    height: 6px;
+  }
+
+  .week-grid {
+    gap: 1px;
+  }
+
+  .week {
+    width: 6px;
+    height: 6px;
+    min-width: 6px;
+  }
+
+  .week-numbers,
+  .week-grid {
+    grid-template-columns: repeat(52, 6px);
+  }
+
+  .week-numbers span {
+    width: 6px;
+    font-size: 5px;
+    line-height: 6px;
+  }
+
+  .year-number {
+    font-size: 6px;
+    line-height: 6px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
